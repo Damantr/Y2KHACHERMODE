@@ -119,38 +119,17 @@
         }
 
         /* █▀▀ █▀█ █▀▄ █▀▀ */
-.cyber-card {
-    background: rgba(10, 10, 25, 0.8);
-    padding: 2rem;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(var(--cyber-blue), 0.2);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    position: relative;
-    overflow: visible; /* Изменил с hidden на visible */
-}
-
-/* Добавь этот новый медиа-запрос */
-@media (min-width: 769px) {
-    .cyber-card {
-        min-height: 0; /* Убираем фиксированную высоту */
-    }
-    
-    .dashboard {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Адаптивные колонки */
-        gap: 0.8rem;
-    }
-    
-    .stat-box {
-        min-width: 120px; /* Минимальная ширина */
-        padding: 0.8rem;
-    }
-    
-    .stat-value {
-        font-size: 1.5rem; /* Чуть уменьшил размер */
-    }
-}
+        .cyber-card {
+             background: rgba(10, 10, 25, 0.8);
+             padding: 2rem;
+             border-radius: 10px;
+             transition: all 0.3s ease;
+             backdrop-filter: blur(10px);
+             border: 1px solid rgba(var(--cyber-blue), 0.2);
+             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+             position: relative;
+             overflow: hidden;
+         }
 
         .cyber-card::before {
             content: '';
@@ -306,6 +285,28 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
             margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        #card4-dashboard{
+            overflow-x: scroll;
+            overflow-y: hidden;
+        }
+
+        #card4-dashboard::-webkit-scrollbar{
+            background: var(--neon-pink);
+        }
+
+        #card4-dashboard .stat-box{
+            margin-bottom: 10px;
+        }
+
+        * ::-webkit-scrollbar{
+            background: rgba(23, 23, 58, 0.808);
+            height: 10px;
+        }
+        * ::-webkit-scrollbar-thumb{
+            background-color: rgba(0, 0, 0, 0.644);
         }
 
         .stat-box {
@@ -579,7 +580,7 @@
                 <li><strong>P2P over Fax</strong></li>
             </ul>
             
-            <div class="dashboard">
+            <div class="dashboard" id="card4-dashboard">
                 <div class="stat-box">
                     <div class="stat-value">1.44MB</div>
                     <div class="stat-label">DISK SPACE</div>
@@ -916,8 +917,8 @@
                 isRunning: false,
                 codes: [],
                 lastSpawn: 0,
-                spawnRate: 2000,
-                gameTime: 30000,
+                spawnRate: 777,
+                gameTime: 60000,
                 startTime: 0,
                 target: null,
                 hitCodes: 0,
