@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>💥 ANDROID_EREMENKO_OS v2.0 💥</title>
+    <!-- CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/confetti-js@0.0.18/dist/index.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Добавляем Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* █▀▀ █▀█ █▀▄ █▀▀ █▀▄ █▀█ ▀█▀ █▀▀ */
+        :root {
+            --neon-pink: #ff4dff;
+            --cyber-blue: #4df9ff;
+            --matrix-green: #00ff88;
+            --retro-purple: #bb00ff;
+            --dark-bg: #0a0a14;
+            --darker-bg: #050510;
+            --text-color: #e0e0ff;
+        }
+
+        /* █▄█ █▀█ █▀▄ █░█ █▀▀ █▀▀ ▀█▀ */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-bg);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(var(--neon-pink), 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(var(--cyber-blue), 0.05) 0%, transparent 20%);
+            font-family: 'VT323', monospace;
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            font-size: 1.2rem;
+        }
+
+        /* █▀▀ █░░ █▀█ █▀▄ █▀▀ */
+        @keyframes neon-glow {
+            0%, 100% { box-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink); }
+            50% { box-shadow: 0 0 20px var(--cyber-blue), 0 0 40px var(--cyber-blue); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* █▀▄ █▀█ █▀▀ */
+        header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--darker-bg), #111125);
+            margin: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(var(--cyber-blue), 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent 45%,
+                rgba(var(--neon-pink), 0.1) 50%,
+                transparent 55%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(30deg) translate(-10%, -10%); }
+            100% { transform: rotate(30deg) translate(10%, 10%); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-family: 'Press Start 2P', cursive;
+            background: linear-gradient(90deg, var(--neon-pink), var(--cyber-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--cyber-blue);
+            margin-top: 1rem;
+            text-shadow: 0 0 10px var(--cyber-blue);
+            font-family: 'VT323', monospace;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* █▀▀ █▀█ █▀▀ █▀▄▀█ */
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* █▀▀ █▀█ █▀▄ █▀▀ */
+        .cyber-card {
+            background: rgba(10, 10, 25, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(var(--cyber-blue), 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cyber-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(var(--neon-pink), 0.3);
+            border-radius: 10px;
+            pointer-events: none;
+            animation: neon-glow 3s infinite alternate;
+        }
+
+        .cyber-card:hover {
+            box-shadow: 0 20px 50px rgba(var(--neon-pink), 0.3);
+        }
+
+        .card-title {
+            color: var(--cyber-blue);
+            font-size: 1.8rem;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            position: relative;
+            font-family: 'Press Start 2P', cursive;
+            text-shadow: 0 0 5px var(--cyber-blue);
+        }
+
+        /* █▀▀ █▀▀ █▄░█ █▀▀ █▀█ */
+        .pixel-portrait {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 1rem auto;
+            background: linear-gradient(45deg, var(--neon-pink), var(--cyber-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(var(--cyber-blue), 0.3);
+            border: 4px solid var(--matrix-green);
+            image-rendering: pixelated;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .pixel-portrait::before {
+            content: 'AE';
+            font-size: 4rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        /* █▀▀ █▀█ █▀▀ █░░ █▀▀ */
+        .retro-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .retro-list li {
+            padding: 0.8rem 0;
+            margin: 0.5rem 0;
+            border-bottom: 1px solid rgba(var(--cyber-blue), 0.1);
+            position: relative;
+            padding-left: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .retro-list li:hover {
+            background: rgba(var(--cyber-blue), 0.05);
+            transform: translateX(5px);
+        }
+
+        .retro-list li::before {
+            content: '>';
+            color: var(--neon-pink);
+            position: absolute;
+            left: 0;
+        }
+
+        /* █▀▀ █▀▀ █▄░█ █▀▀ █▀█ */
+        .console-panel {
+            background: rgba(0, 10, 20, 0.7);
+            border-radius: 5px;
+            padding: 1.5rem;
+            font-family: 'VT323', monospace;
+            color: var(--matrix-green);
+            margin: 1rem 0;
+            height: 200px;
+            overflow-y: auto;
+            border: 1px solid rgba(var(--matrix-green), 0.2);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .console-line {
+            margin: 0.3rem 0;
+            line-height: 1.5;
+        }
+
+        .console-line::before {
+            content: '> ';
+            color: var(--neon-pink);
+        }
+
+        /* █▀▀ █▀█ █▀▀ █░░ █▀▀ */
+        .cyber-button {
+            background: linear-gradient(45deg, var(--neon-pink), var(--retro-purple));
+            border: none;
+            padding: 1rem 2rem;
+            color: white;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-top: 1rem;
+            box-shadow: 0 5px 15px rgba(var(--neon-pink), 0.3);
+            position: relative;
+            overflow: hidden;
+            font-family: 'VT323', monospace;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            z-index: 1;
+        }
+
+        .cyber-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(var(--neon-pink), 0.4);
+        }
+
+        .cyber-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.5s ease;
+            z-index: -1;
+        }
+
+        .cyber-button:hover::after {
+            left: 100%;
+        }
+
+        /* █▀▀ █▀█ █▀▀ █░░ █▀▀ */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(var(--cyber-blue), 0.2);
+            border-radius: 5px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(var(--cyber-blue), 0.3);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            color: var(--neon-pink);
+            font-family: 'Press Start 2P', cursive;
+            margin: 0.5rem 0;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--cyber-blue);
+        }
+
+        /* █▀▀ █▀█ █▀▀ █░░ █▀▀ */
+        .progress-bar {
+            height: 10px;
+            background: rgba(var(--cyber-blue), 0.2);
+            border-radius: 5px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-pink), var(--retro-purple));
+            border-radius: 5px;
+            width: 0;
+            transition: width 1s ease;
+        }
+
+        /* Новые UI-элементы */
+        .cyber-toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            margin: 1rem 0;
+        }
+
+        .cyber-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .cyber-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(var(--cyber-blue), 0.2);
+            transition: .4s;
+            border-radius: 34px;
+            border: 1px solid var(--cyber-blue);
+        }
+
+        .cyber-slider:before {
+            position: absolute;
+            content: '';
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 3px;
+            background: linear-gradient(45deg, var(--neon-pink), var(--retro-purple));
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .cyber-slider {
+            background-color: rgba(var(--neon-pink), 0.2);
+            border-color: var(--neon-pink);
+        }
+
+        input:checked + .cyber-slider:before {
+            transform: translateX(30px);
+            background: linear-gradient(45deg, var(--cyber-blue), var(--matrix-green));
+        }
+
+        /* Стили для графиков */
+        .chart-container {
+            position: relative;
+            height: 200px;
+            margin: 1rem 0;
+        }
+
+        .chart-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(to right, rgba(var(--cyber-blue), 0.05) 1px, transparent 1px) 0 0 / 20px 20px,
+                linear-gradient(to bottom, rgba(var(--cyber-blue), 0.05) 1px, transparent 1px) 0 0 / 20px 20px;
+            z-index: 0;
+        }
+
+        /* Стили для мини-игры */
+        .game-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            margin: 1rem 0;
+            border: 2px solid var(--neon-pink);
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .game-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--matrix-green);
+            font-family: 'Press Start 2P', cursive;
+            text-align: center;
+            width: 100%;
+            padding: 0 1rem;
+            z-index: 10;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .main-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            header {
+                margin: 1rem;
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ANDROID_EREMENKO_OS</h1>
+        <p class="subtitle">v2.0 - SYSTEM OVERLOADED</p>
+    </header>
+
+    <div class="main-grid">
+        <!-- Карточка 1: Профиль -->
+        <div class="cyber-card" id="card1">
+            <div class="pixel-portrait"></div>
+            <h2 class="card-title">SYSTEM PROFILE</h2>
+            <ul class="retro-list">
+                <li><strong>USERNAME:</strong> EREMENKO_ADMIN</li>
+                <li><strong>ACCESS LEVEL:</strong> <span id="access-level">ROOT</span></li>
+                <li><strong>LAST LOGIN:</strong> 31.12.1999</li>
+                <li><strong>STATUS:</strong> <span style="color: var(--matrix-green);">ACTIVE</span></li>
+            </ul>
+            
+            <div class="dashboard">
+                <div class="stat-box">
+                    <div class="stat-value">256</div>
+                    <div class="stat-label">CYBER ATTACKS</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">99%</div>
+                    <div class="stat-label">WIN98 COMPAT</div>
+                </div>
+            </div>
+            
+            <label class="cyber-toggle">
+                <input type="checkbox" id="toggle-root">
+                <span class="cyber-slider"></span>
+            </label>
+            <span style="margin-left: 10px;">ROOT ACCESS</span>
+        </div>
+
+        <!-- Карточка 2: Дашборд -->
+        <div class="cyber-card" id="card2">
+            <h2 class="card-title">SYSTEM DASHBOARD</h2>
+            
+            <div class="dashboard">
+                <div class="stat-box">
+                    <div class="stat-value">56K</div>
+                    <div class="stat-label">MODEM SPEED</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%;"></div>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">∞</div>
+                    <div class="stat-label">POWER LEVEL</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="cyber-button" id="hackButton">LAUNCH .EXE</button>
+            
+            <div class="console-panel" id="console">
+                <div class="console-line">SYSTEM BOOTING...</div>
+                <div class="console-line">LOADING Y2K PROTOCOLS</div>
+                <div class="console-line">████████░░░░ 75%</div>
+            </div>
+        </div>
+
+        <!-- Карточка 3: Навыки -->
+        <div class="cyber-card" id="card3">
+            <h2 class="card-title">CYBER SKILLS</h2>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span>Win95 Hacking</span>
+                    <span>100%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%; background: linear-gradient(90deg, var(--neon-pink), var(--retro-purple));"></div>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span>MS Paint Art</span>
+                    <span>∞%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%; background: linear-gradient(90deg, var(--cyber-blue), var(--matrix-green));"></div>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span>AOL Phishing</span>
+                    <span>1999%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%; background: linear-gradient(90deg, var(--matrix-green), var(--cyber-blue));"></div>
+                </div>
+            </div>
+            
+            <div class="retro-list">
+                <li>Created first NFT on Geocities</li>
+                <li>Invented 56K blockchain</li>
+                <li>Ported Linux to Tamagotchi</li>
+            </div>
+        </div>
+
+        <!-- Карточка 4: Проекты -->
+        <div class="cyber-card" id="card4">
+            <h2 class="card-title">LEGENDARY PROJECTS</h2>
+            <ul class="retro-list">
+                <li><strong>WinAMP Skin Generator</strong> (1998)</li>
+                <li><strong>DOOM for Nokia 3310</strong></li>
+                <li><strong>MS-DOS Web Browser</strong></li>
+                <li><strong>P2P over Fax</strong></li>
+            </ul>
+            
+            <div class="dashboard">
+                <div class="stat-box">
+                    <div class="stat-value">1.44MB</div>
+                    <div class="stat-label">DISK SPACE</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">16-bit</div>
+                    <div class="stat-label">COLOR DEPTH</div>
+                </div>
+            </div>
+            
+            <button class="cyber-button" id="projectButton">VIEW PROJECTS</button>
+        </div>
+
+        <!-- Карточка 5: Контакты -->
+        <div class="cyber-card" id="card5">
+            <h2 class="card-title">CYBER CONTACTS</h2>
+            
+            <div class="retro-list">
+                <li><i class="fas fa-envelope"></i> e-mail: 1337@aol.com</li>
+                <li><i class="fas fa-phone"></i> ICQ: 12345678</li>
+                <li><i class="fas fa-globe"></i> GeoCities: /Y2K_Wizard</li>
+            </div>
+            
+            <div style="margin-top: 2rem;">
+                <h3 style="color: var(--cyber-blue);">SEND PIXEL MESSAGE:</h3>
+                <textarea style="width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--cyber-blue); color: white; padding: 0.5rem; font-family: 'VT323', monospace;" rows="3" id="messageInput"></textarea>
+                <button class="cyber-button" style="width: 100%;" id="sendButton">TRANSMIT (56K)</button>
+            </div>
+        </div>
+
+        <!-- Карточка 6: Мини-игра -->
+        <div class="cyber-card" id="card6">
+            <h2 class="card-title">MINI-GAME: HACK THE MAINFRAME</h2>
+            <div class="game-container" id="gameContainer">
+                <div class="game-message" id="gameMessage">PRESS START TO BEGIN</div>
+                <canvas id="gameCanvas" width="300" height="200"></canvas>
+            </div>
+            <div class="dashboard">
+                <div class="stat-box">
+                    <div class="stat-value" id="score">0</div>
+                    <div class="stat-label">SCORE</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="level">1</div>
+                    <div class="stat-label">LEVEL</div>
+                </div>
+            </div>
+            <button class="cyber-button" id="startGame">START HACKING</button>
+        </div>
+
+        <!-- Карточка 7: Хакерская статистика -->
+        <div class="cyber-card" id="card7">
+            <h2 class="card-title">HACKER STATS 1999</h2>
+            <div class="chart-container">
+                <div class="chart-grid"></div>
+                <canvas id="hackerChart"></canvas>
+            </div>
+            <div class="console-panel">
+                <div class="console-line">> ANALYZING HACKER ACTIVITY...</div>
+                <div class="console-line">> TOP VULNERABILITIES:</div>
+                <div class="console-line">> 1. Win95 SMB Exploit</div>
+                <div class="console-line">> 2. AOL Password Phish</div>
+                <div class="console-line">> 3. IRC Backdoor</div>
+            </div>
+        </div>
+
+        <!-- Карточка 8: Y2K Virus Spread -->
+        <div class="cyber-card" id="card8">
+            <h2 class="card-title">Y2K VIRUS SPREAD</h2>
+            <div class="chart-container">
+                <div class="chart-grid"></div>
+                <canvas id="virusChart"></canvas>
+            </div>
+            <div class="retro-list">
+                <li><strong>VIRUS NAME:</strong> MILLENNIUM.EXE</li>
+                <li><strong>INFECTED SYSTEMS:</strong> 1,337,420</li>
+                <li><strong>ORIGIN:</strong> Undisclosed Russian BBS</li>
+            </div>
+            <button class="cyber-button" id="virusButton" style="background: linear-gradient(45deg, var(--matrix-green), var(--cyber-blue));">
+                DEPLOY ANTIVIRUS
+            </button>
+        </div>
+    </div>
+
+    <!-- 3D фон с Three.js -->
+    <div id="threejs-bg" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.2;"></div>
+
+    <!-- Скрипты -->
+    <script>
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            // Тоггл root-доступа
+            const toggleRoot = document.getElementById('toggle-root');
+            const accessLevel = document.getElementById('access-level');
+            
+            toggleRoot.addEventListener('change', () => {
+                if (toggleRoot.checked) {
+                    accessLevel.textContent = 'SUPERUSER';
+                    accessLevel.style.color = 'var(--neon-pink)';
+                    accessLevel.style.textShadow = '0 0 10px var(--neon-pink)';
+                } else {
+                    accessLevel.textContent = 'ROOT';
+                    accessLevel.style.color = '';
+                    accessLevel.style.textShadow = '';
+                }
+            });
+            
+            // Кнопка взлома
+            const hackButton = document.getElementById('hackButton');
+            hackButton.addEventListener('click', () => {
+                hackButton.textContent = 'HACKING...';
+                hackButton.style.background = 'linear-gradient(45deg, var(--matrix-green), var(--cyber-blue))';
+                
+                setTimeout(() => {
+                    const confettiSettings = {
+                        target: 'confetti-canvas',
+                        max: 150,
+                        size: 1.5,
+                        animate: true,
+                        colors: [
+                            [255, 77, 255],
+                            [77, 249, 255],
+                            [0, 255, 136],
+                            [187, 0, 255]
+                        ],
+                        clock: 25
+                    };
+                    
+                    const confetti = new ConfettiGenerator(confettiSettings);
+                    confetti.render();
+                    
+                    hackButton.textContent = 'HACK COMPLETE!';
+                    hackButton.style.background = 'linear-gradient(45deg, #00ff00, #00aa00))';
+                    
+                    const finalMessage = document.createElement('div');
+                    finalMessage.className = 'console-line';
+                    finalMessage.style.color = 'var(--neon-pink)';
+                    finalMessage.style.fontWeight = 'bold';
+                    finalMessage.textContent = '>> SYSTEM HACKED! WELCOME TO 1999!';
+                    document.getElementById('console').appendChild(finalMessage);
+                    
+                    setTimeout(() => {
+                        document.getElementById('confetti-canvas').style.opacity = '0';
+                    }, 5000);
+                }, 2000);
+            });
+            
+            // Мини-игра
+            initGame();
+            
+            // 3D фон
+            initThreeJS();
+
+            // Инициализация графиков
+            initCharts();
+        });
+        
+        // Инициализация графиков
+        function initCharts() {
+            // График хакерской статистики
+            const hackerCtx = document.getElementById('hackerChart').getContext('2d');
+            const hackerChart = new Chart(hackerCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Win95 Exploits', 'AOL Phishing', 'IRC Wars', 'BBS Hacks', 'Virus Writing', 'Password Cracking'],
+                    datasets: [{
+                        label: 'Hacker Skills 1999',
+                        data: [95, 85, 70, 65, 90, 75],
+                        backgroundColor: 'rgba(77, 249, 255, 0.2)',
+                        borderColor: 'rgba(77, 249, 255, 1)',
+                        pointBackgroundColor: 'rgba(255, 77, 255, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(255, 77, 255, 1)',
+                        borderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: true,
+                                color: 'rgba(187, 0, 255, 0.2)'
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            grid: {
+                                color: 'rgba(77, 249, 255, 0.2)'
+                            },
+                            pointLabels: {
+                                color: 'rgba(255, 77, 255, 1)',
+                                font: {
+                                    family: "'VT323', monospace",
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                backdropColor: 'rgba(10, 10, 25, 0.8)',
+                                color: 'rgba(0, 255, 136, 1)',
+                                font: {
+                                    family: "'VT323', monospace",
+                                    size: 12
+                                },
+                                stepSize: 20
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    elements: {
+                        line: {
+                            tension: 0.1
+                        }
+                    }
+                }
+            });
+
+            // График распространения вируса
+            const virusCtx = document.getElementById('virusChart').getContext('2d');
+            const virusChart = new Chart(virusCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Infected Systems',
+                        data: [120, 190, 300, 500, 800, 1200, 1800, 2500, 4200, 6800, 10200, 13370],
+                        backgroundColor: 'rgba(255, 77, 255, 0.1)',
+                        borderColor: 'rgba(255, 77, 255, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(0, 255, 136, 1)',
+                        pointBorderColor: '#fff',
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(77, 249, 255, 0.2)'
+                            },
+                            ticks: {
+                                color: 'rgba(0, 255, 136, 1)',
+                                font: {
+                                    family: "'VT323', monospace",
+                                    size: 14
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(77, 249, 255, 0.2)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 77, 255, 1)',
+                                font: {
+                                    family: "'VT323', monospace",
+                                    size: 14
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            titleFont: {
+                                family: "'VT323', monospace",
+                                size: 16
+                            },
+                            bodyFont: {
+                                family: "'VT323', monospace",
+                                size: 14
+                            },
+                            backgroundColor: 'rgba(10, 10, 25, 0.9)',
+                            titleColor: 'rgba(77, 249, 255, 1)',
+                            bodyColor: 'rgba(255, 255, 255, 1)',
+                            borderColor: 'rgba(255, 77, 255, 1)',
+                            borderWidth: 1
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
+            });
+
+            // Анимация для кнопки антивируса
+            const virusButton = document.getElementById('virusButton');
+            virusButton.addEventListener('click', function() {
+                this.textContent = 'SCANNING...';
+                this.style.background = 'linear-gradient(45deg, var(--neon-pink), var(--retro-purple))';
+                
+                // Анимация графика при нажатии
+                virusChart.data.datasets[0].data = [120, 190, 300, 500, 800, 1200, 1800, 2500, 4200, 6800, 10200, 500];
+                virusChart.update();
+                
+                setTimeout(() => {
+                    this.textContent = 'VIRUS CLEANED!';
+                    this.style.background = 'linear-gradient(45deg, #00ff00, #00aa00))';
+                }, 1500);
+            });
+        }
+        
+        // Мини-игра "Хакер"
+        function initGame() {
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            const startButton = document.getElementById('startGame');
+            const scoreElement = document.getElementById('score');
+            const levelElement = document.getElementById('level');
+            const gameContainer = document.getElementById('gameContainer');
+            const gameMessage = document.getElementById('gameMessage');
+            
+            // Настройки игры
+            const game = {
+                width: canvas.width,
+                height: canvas.height,
+                score: 0,
+                level: 1,
+                isRunning: false,
+                codes: [],
+                lastSpawn: 0,
+                spawnRate: 2000,
+                gameTime: 30000,
+                startTime: 0,
+                target: null,
+                hitCodes: 0,
+                totalCodes: 0
+            };
+            
+            // Символы для "матричного дождя"
+            const chars = '01ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ≡+*';
+            
+            // Класс падающего кода
+            class FallingCode {
+                constructor() {
+                    this.x = Math.random() * game.width;
+                    this.y = -20;
+                    this.speed = 1 + Math.random() * game.level;
+                    this.length = 3 + Math.floor(Math.random() * 5);
+                    this.chars = [];
+                    this.isTarget = Math.random() < 0.2;
+                    this.color = this.isTarget ? '#ff4dff' : '#00ff88';
+                    
+                    // Генерация случайных символов
+                    for (let i = 0; i < this.length; i++) {
+                        this.chars.push(chars[Math.floor(Math.random() * chars.length)]);
+                    }
+                    
+                    if (this.isTarget) game.target = this;
+                    game.totalCodes++;
+                }
+                
+                update() {
+                    this.y += this.speed;
+                    
+                    // Проверка на выход за границы
+                    return this.y - (this.length * 15) > game.height;
+                }
+                
+                draw(ctx) {
+                    ctx.font = '16px "VT323"';
+                    for (let i = 0; i < this.chars.length; i++) {
+                        // Градиент для символов
+                        const alpha = 1 - (i * 0.15);
+                        ctx.fillStyle = this.isTarget 
+                            ? `rgba(255, 77, 255, ${alpha})` 
+                            : `rgba(0, 255, 136, ${alpha})`;
+                        
+                        ctx.fillText(this.chars[i], this.x, this.y + (i * 15));
+                    }
+                }
+                
+                isHit(x, y) {
+                    return x >= this.x - 10 && x <= this.x + 10 && 
+                           y >= this.y - 15 && y <= this.y + (this.length * 15);
+                }
+            }
+            
+            // Основной игровой цикл
+            function gameLoop(timestamp) {
+                if (!game.isRunning) return;
+                
+                // Очистка canvas
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                ctx.fillRect(0, 0, game.width, game.height);
+                
+                // Спавн новых кодов
+                if (timestamp - game.lastSpawn > game.spawnRate / game.level) {
+                    game.codes.push(new FallingCode());
+                    game.lastSpawn = timestamp;
+                }
+                
+                // Обновление и отрисовка кодов
+                for (let i = game.codes.length - 1; i >= 0; i--) {
+                    const code = game.codes[i];
+                    if (code.update()) {
+                        game.codes.splice(i, 1);
+                        if (code.isTarget) game.target = null;
+                    }
+                    code.draw(ctx);
+                }
+                
+                // Проверка времени игры
+                if (timestamp - game.startTime > game.gameTime) {
+                    endGame();
+                    return;
+                }
+                
+                requestAnimationFrame(gameLoop);
+            }
+            
+            // Начало игры
+            function startGame() {
+                game.score = 0;
+                game.level = 1;
+                game.isRunning = true;
+                game.codes = [];
+                game.lastSpawn = 0;
+                game.startTime = performance.now();
+                game.hitCodes = 0;
+                game.totalCodes = 0;
+                
+                scoreElement.textContent = game.score;
+                levelElement.textContent = game.level;
+                startButton.textContent = 'HACKING...';
+                gameMessage.style.display = 'none';
+                
+                requestAnimationFrame(gameLoop);
+            }
+            
+            // Конец игры
+            function endGame() {
+                game.isRunning = false;
+                startButton.textContent = 'PLAY AGAIN';
+                
+                // Показ результатов
+                const accuracy = game.totalCodes > 0 
+                    ? Math.round((game.hitCodes / game.totalCodes) * 100) 
+                    : 0;
+                
+                gameMessage.innerHTML = `
+                    HACK COMPLETE!<br>
+                    SCORE: ${game.score}<br>
+                    LEVEL: ${game.level}<br>
+                    ACCURACY: ${accuracy}%
+                `;
+                gameMessage.style.display = 'block';
+            }
+            
+            // Обработчик клика по canvas
+            canvas.addEventListener('click', (e) => {
+                if (!game.isRunning) return;
+                
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                for (let i = game.codes.length - 1; i >= 0; i--) {
+                    const code = game.codes[i];
+                    if (code.isHit(x, y)) {
+                        game.codes.splice(i, 1);
+                        game.hitCodes++;
+                        
+                        // Бонус за попадание в цель
+                        if (code.isTarget) {
+                            game.score += game.level * 10;
+                            game.target = null;
+                        } else {
+                            game.score += game.level;
+                        }
+                        
+                        scoreElement.textContent = game.score;
+                        
+                        // Повышение уровня
+                        if (game.score >= game.level * 50) {
+                            game.level++;
+                            levelElement.textContent = game.level;
+                        }
+                        
+                        break;
+                    }
+                }
+            });
+            
+            // Кнопка старта игры
+            startButton.addEventListener('click', () => {
+                if (!game.isRunning) {
+                    startGame();
+                }
+            });
+        }
+        
+        // 3D фон с Three.js
+        function initThreeJS() {
+            const container = document.getElementById('threejs-bg');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            // Сцена
+            const scene = new THREE.Scene();
+            
+            // Камера
+            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            camera.position.z = 5;
+            
+            // Рендерер
+            const renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(width, height);
+            container.appendChild(renderer.domElement);
+            
+            // Геометрия (кубы)
+            const geometry = new THREE.BoxGeometry(1, 1, 1);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0x00ffff,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.5
+            });
+            
+            const cubes = [];
+            for (let i = 0; i < 10; i++) {
+                const cube = new THREE.Mesh(geometry, material);
+                cube.position.x = Math.random() * 10 - 5;
+                cube.position.y = Math.random() * 10 - 5;
+                cube.position.z = Math.random() * 10 - 5;
+                cube.rotation.x = Math.random() * Math.PI;
+                cube.rotation.y = Math.random() * Math.PI;
+                cubes.push(cube);
+                scene.add(cube);
+            }
+            
+            // Анимация
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                cubes.forEach(cube => {
+                    cube.rotation.x += 0.01;
+                    cube.rotation.y += 0.01;
+                });
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Ресайз
+            window.addEventListener('resize', () => {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+            });
+        }
+    </script>
+    
+    <!-- Canvas для конфетти -->
+    <canvas id="confetti-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; opacity: 0;"></canvas>
+</body>
+</html>
