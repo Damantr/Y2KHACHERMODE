@@ -119,17 +119,38 @@
         }
 
         /* █▀▀ █▀█ █▀▄ █▀▀ */
-        .cyber-card {
-            background: rgba(10, 10, 25, 0.8);
-            padding: 2rem;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(var(--cyber-blue), 0.2);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
+.cyber-card {
+    background: rgba(10, 10, 25, 0.8);
+    padding: 2rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(var(--cyber-blue), 0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: visible; /* Изменил с hidden на visible */
+}
+
+/* Добавь этот новый медиа-запрос */
+@media (min-width: 769px) {
+    .cyber-card {
+        min-height: 0; /* Убираем фиксированную высоту */
+    }
+    
+    .dashboard {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Адаптивные колонки */
+        gap: 0.8rem;
+    }
+    
+    .stat-box {
+        min-width: 120px; /* Минимальная ширина */
+        padding: 0.8rem;
+    }
+    
+    .stat-value {
+        font-size: 1.5rem; /* Чуть уменьшил размер */
+    }
+}
 
         .cyber-card::before {
             content: '';
